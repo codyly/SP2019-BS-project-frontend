@@ -1,0 +1,21 @@
+#main-logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 24px 16px 0;
+    float: left;
+    background-image: url('../assets/img/logo.png');
+    background-size: cover;
+  }
+
+#main-layout{
+    height: 100%;
+
+}
+#main-content{
+    height: 100%;
+}
+
+body{
+    background-color: #f0f2f5;
+}

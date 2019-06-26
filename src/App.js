@@ -1,24 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import 'antd/dist/antd.css'; 
+import './css/LoginPage.css';
+import LoginPage from './components/LoginPage';
+import Main from './main/Main'
+import {Form} from 'antd';
+import {Map, Marker} from 'react-amap'; 
+function App() {  
+   return (
+     <div style={{height: "100%"}}>
+       <Main/>
     </div>
   );
 }

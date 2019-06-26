@@ -1,0 +1,42 @@
+#login-form {
+    max-width: 300px;
+    margin-bottom: -30px;
+  }
+#login-form-forgot {
+  float: right;
+}
+#login-form-button {
+  width: 100%;
+}
+#login-form-container{
+  margin-top: 10em;
+  
+}
+#login-form-col{
+  padding-right: 20px;
+  min-width: 340px;
+  max-width: 340px;
+}
+#login-form-card{
+  max-height: 360px;
+  opacity: 0.9;
+}
+body{
+  /* background-image: url("../assets/img/login-bg.png"); */
+  background-size:cover;
+  overflow: hidden;
+}
+#sign-with-google{
+  background-image: url("../assets/img/google.png");
+  background-size: cover;
+  border: none;
+}
+#sign-with-github{
+  background-image: url("../assets/img/github.png");
+  background-size: cover;
+  border: none;
+}
+#reg-banner{
+  background-size: cover;
+  border: none;
+}

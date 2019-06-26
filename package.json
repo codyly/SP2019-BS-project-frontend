@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.19.7",
     "react": "^16.8.6",
+    "react-amap": "^1.2.8",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
   },
@@ -28,5 +29,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "superagent": "^5.1.0"
   }
 }
