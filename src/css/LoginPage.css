@@ -24,7 +24,7 @@
 body{
   /* background-image: url("../assets/img/login-bg.png"); */
   background-size:cover;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 #sign-with-google{
   background-image: url("../assets/img/google.png");

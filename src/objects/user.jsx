@@ -2,8 +2,9 @@ import React from 'react';
 
 class User{
     state = 0;
-    username = "Ren Liu";
+    username = "Guest";
     unread = 1;
+    cart = 0;
     location=[];
     getState = ()=>{
       return this.state;  
@@ -14,5 +15,4 @@ class User{
 };
 
 const user =new User();
-user.setState(1);
 export default user;

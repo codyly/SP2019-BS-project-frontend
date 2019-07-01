@@ -15,7 +15,21 @@
 #main-content{
     height: 100%;
 }
+.subpage-container{
+    height: 100%;
+}
+.Pagination-container{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.cover-bg{
+    background-image: url('http://47.106.34.252/default.png');
+    background-size: 128px 128px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 body{
     background-color: #f0f2f5;
+    
 }

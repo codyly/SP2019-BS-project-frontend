@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button, Form, Icon, Input, Checkbox, Modal} from 'antd';
+import ReactDOM from 'react-dom';
+import {Button, Form, Icon, Input, Checkbox, Modal, message} from 'antd';
 import {Col, Row, Card} from 'antd';
 import '../css/LoginPage.css';
 import 'antd/dist/antd.css'; 
@@ -7,11 +8,20 @@ import sha1 from 'js-sha1';
 import GoogleLogin from 'react-google-login';
 import GitHubLogin from 'react-github-login';
 import Constants from '../Constants';
-
+import { POSTRquest } from '../utils/httpRequest';
+import { Route, Redirect } from 'react-router'
+import user from '../objects/user';
+import App from '../App';
+import Main from '../main/Main';
 class LoginInfo{
     static values = "";
 };
 
+function registryFeedback(str){
+    if(str['stateCode'] === 0){
+        ReactDOM.render(<Main />, document.getElementById('root'));
+    }
+}
 
 
 export class RegistryForm extends React.Component{
@@ -20,9 +30,32 @@ export class RegistryForm extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) =>{
             if(!err){
-                values['password'] = sha1(values['password']);
-                LoginInfo.values = values;
-                console.log('Received values of form: ', values);
+                if(values['password'].length < 6){
+                    message.error("password must be longer than 6")
+                    return;
+                }
+                else if(values['confirm']!==values['password']){
+                    message.error("confirm password not matched") 
+                    return;
+                }
+                else if(values['email'].indexOf('@')===-1){
+                    message.error("error email form") 
+                    return;
+                }
+                values['confirm'] = window.btoa(sha1(values['confirm']));
+                values['password'] = window.btoa(sha1(values['password']));
+                if(1){
+                    var data = {
+                        name: values['username'],
+                        pwd:  values['password'],
+                        email: values['email']
+                    }
+                    var url = Constants.userConstants['reg_url'];
+                    console.log(data);
+                    POSTRquest(url, data, registryFeedback);
+                    LoginInfo.values = values;
+                    console.log('Received values of form: ', values);
+                }
             }
         });
     };

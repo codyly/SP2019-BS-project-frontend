@@ -1,16 +1,29 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import Main from '../main/Main'
+import {POSTRquest} from '../utils/httpRequest'
 import {Button, Form, Icon, Input, Checkbox, Modal} from 'antd';
-import {Col, Row, Card} from 'antd';
 import '../css/LoginPage.css';
 import 'antd/dist/antd.css'; 
 import sha1 from 'js-sha1';
 import GoogleLogin from 'react-google-login';
-import GitHubLogin from 'react-github-login';
-import {RegistryForm} from './RegistryPage';
 import Constants from '../Constants';
+import user from '../objects/user';
+
 class LoginInfo{
     static values = "";
 };
+
+function loginFeedback(str){
+    
+    if(str['stateCode'] === 0){
+        
+        user.setState(1);
+        user.username = str['info'];
+        console.log(user.name);
+        ReactDOM.render(<Main />, document.getElementById('root'));
+    }
+}
 
 
 class LoginForm extends React.Component{
@@ -19,8 +32,16 @@ class LoginForm extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) =>{
             if(!err){
-                values['password'] = sha1(values['password']);
+                values['password'] = window.btoa(sha1(values['password']));
                 LoginInfo.values = values;
+                var data = {
+                    name: values['username'],
+                    pwd:  values['password'],
+                    email: values['email']
+                }
+                var url = Constants.userConstants['login_url'];
+                console.log(url);
+                POSTRquest(url, data, loginFeedback);
                 console.log('Received values of form: ', values);
             }
         });
@@ -130,8 +151,6 @@ export default class LoginPage extends React.Component{
                         clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
                         render={renderProps => (
                             <Button id="sign-with-google"></Button>
-                            
-                        // <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
                         )}
                         buttonText="Login"
                         onSuccess={responseGoogle}

@@ -6,8 +6,21 @@ import LoginPage from '../components/LoginPage';
 import user from '../objects/user';
 import Constants from '../Constants'
 import { Dropdown, Icon } from 'antd';
+import superagent from 'superagent';
+import CartPage from './SubPages/Cart';
+import FavPage from './SubPages/Fav';
+import MsgPage from './SubPages/MessagePage';
+import UploadPage from './SubPages/Upload'
+import OrderPage from './SubPages/OrderView';
+import AccountPage from './SubPages/Account';
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
+
+function logout(){
+    const url = Constants.userConstants['home'];
+    user.username="Guest";
+    window.location.href=url;
+}
 
 
 const menu = (
@@ -18,30 +31,36 @@ const menu = (
         <Menu.Item key="00">
             <span>
                 <Icon type='user' style={{marginRight: '5px'}}></Icon>
-                <span>Account</span>
+                <span><AccountPage/></span>
             </span>
         </Menu.Item>
         <Menu.Item key="11">
             <span>
             <Badge dot={user.unread > 0}>
                 <Icon type='message' style={{marginRight: '5px'}}></Icon>
-                <span>Messages</span>
+                <span><MsgPage/></span>
             </Badge>
             </span>
         </Menu.Item>
         <Menu.Item key="22">
             <span>
                 <Icon type='heart' style={{marginRight: '5px'}}></Icon>
-                <span>Favourites</span>
+                <span><FavPage/></span>
+            </span>
+        </Menu.Item>
+        <Menu.Item key="23">
+            <span>
+                <Icon type='shopping' style={{marginRight: '5px'}}></Icon>
+                <span><UploadPage/></span>
             </span>
         </Menu.Item>
         <Menu.Item key="33">
             <span>
                 <Icon type='bars' style={{marginRight: '5px'}}></Icon>
-                <span>Orders</span>
+                <span><OrderPage/></span>
             </span>
         </Menu.Item>
-        <Menu.Item key="44">
+        <Menu.Item key="44" onClick={logout}>
             <span>
                 <Icon type='logout' style={{marginRight: '5px'}}></Icon>
                 <span>Log out</span>
@@ -51,6 +70,32 @@ const menu = (
 );
 
 export default class AvatarMenu extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            cartNum: 0
+        }
+        this.updateCart();
+    }
+    
+    updateCart=()=>{
+        let that = this;
+        setInterval(()=>{
+            var url = Constants.userConstants.get_cart;
+            var query = {username: user.username};
+                superagent.get(url)
+                    .query(query)
+                    .end((err,res)=>{
+                        var count = res.body.info;
+                        if(count!==undefined && count!==null){
+                            this.setState({
+                                cartNum: count.split('bookid').length
+                            })
+                        }        
+                    })
+        },2000);
+    }
+
     render(){
         return(
             <div>
@@ -66,8 +111,8 @@ export default class AvatarMenu extends React.Component{
             </span>
             <span style={{ marginRight: 24}}>
                 <span>
-                <Badge count={1} >
-                    <Avatar style={{cursor:"pointer"}} size={36} shape="circle" src={Constants.pictureUrl['shopping-cart']}/>
+                <Badge count={Math.max(0, this.state.cartNum-1)} >
+                    <CartPage/>
                 </Badge>
                 <label style={{marginLeft: 10}}></label>
                 </span>              
